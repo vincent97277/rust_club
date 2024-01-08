@@ -17,19 +17,16 @@ impl IdCard {
         let mut map = HashMap::new();
 
         let numbers = vec![10, 11, 12, 13, 14, 15, 16, 17, 34, 18, 19, 20, 21, 22, 35, 23, 24, 25, 26, 27, 28, 29, 32, 30, 31, 33];
-        let letters = vec!['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
+        let letters: Vec<char> = ('A'..='Z').collect();
 
         for (letter, number) in letters.iter().zip(numbers.iter()) {
             map.insert(*number, *letter);
         }
 
         let mut rng = thread_rng();
-        let (_, area) = numbers.into_iter().enumerate().choose(&mut rng).unwrap();
+        let area = numbers.choose(&mut rng).unwrap();
         let gender: i8 = rng.gen_range(1..=2);
-        let mut serial_no = vec![];
-        for _i in 0..7 {
-            serial_no.push(rng.gen_range(0..10));
-        }
+        let serial_no:Vec<i32> = (0..7).map(|_| rng.gen_range(0..10)).collect();
 
         let temp_id_number = format!("{}{}{}", area, gender, serial_no.into_iter().map(|number| number.to_string()).collect::<String>());
 
